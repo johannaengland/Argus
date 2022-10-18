@@ -3,6 +3,12 @@ This file documents changes to Argus that are relevant for the users to know.
 
 ## [Unreleased]
 
+## ticket-plugin-base
+
+## Added
+- Added an endpoint to create a new ticket in an external ticket system
+
+
 ## Added
 
 - Added an endpoint to get a refreshed auth token.
