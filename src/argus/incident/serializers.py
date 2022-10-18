@@ -373,3 +373,7 @@ class AcknowledgementSerializer(serializers.ModelSerializer):
         if expiration and expiration <= attrs["event"]["timestamp"]:
             raise serializers.ValidationError("'expiration' is earlier than creation timestamp.")
         return attrs
+
+
+class EmptySerializer(serializers.Serializer):
+    pass

@@ -748,3 +748,13 @@ class IncidentViewSetTestCase(APITestCase):
         response = self.client.put(path=f"/api/v2/incidents/sources/{self.source.pk}/", data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(SourceSystem.objects.get(id=self.source.pk).name, data["name"])
+
+    def test_can_get_existing_ticket_url_of_incident(self):
+        pk = StatefulIncidentFactory().pk
+        data = {
+            "ticket_url": "www.example.com",
+        }
+        response = self.client.put(path=f"/api/v2/incidents/{pk}/ticket_url/", data=data, format="json")
+        response = self.client.put(path=f"/api/v2/incidents/{pk}/new_ticket/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["ticket_url"], data["ticket_url"])

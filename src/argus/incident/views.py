@@ -1,5 +1,6 @@
 import secrets
 
+from django.conf import settings
 from django.db import IntegrityError
 
 from django_filters import rest_framework as filters
@@ -17,7 +18,9 @@ from rest_framework.reverse import reverse
 
 from argus.auth.models import User
 from argus.drf.permissions import IsSuperuserOrReadOnly
+from argus.incident.ticket.base import TicketPluginException
 from argus.util.datetime_utils import INFINITY_REPR
+from argus.util.utils import import_class_from_dotted_path
 
 from .forms import AddSourceSystemForm
 from .filters import IncidentFilter, SourceLockedIncidentFilter
@@ -31,6 +34,7 @@ from .models import (
 from .serializers import (
     UpdateAcknowledgementSerializer,
     AcknowledgementSerializer,
+    EmptySerializer,
     EventSerializer,
     IncidentPureDeserializer,
     IncidentSerializer,
@@ -243,6 +247,64 @@ class IncidentViewSet(
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema_view(
+    update=extend_schema(
+        request=EmptySerializer,
+    ),
+)
+class TicketPluginViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = IncidentTicketUrlSerializer
+    write_serializer_class = EmptySerializer
+    queryset = Incident.objects.all()
+
+    def update(self, request, incident_pk=None):
+        incident = get_object_or_404(self.queryset, pk=incident_pk)
+
+        if incident.ticket_url:
+            serializer = self.serializer_class(data={"ticket_url": incident.ticket_url})
+            if serializer.is_valid():
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        plugin = getattr(settings, "TICKET_PLUGIN", None)
+
+        if not plugin:
+            return Response(
+                data="No path to ticket plugin can be found in the settings. Please update the setting 'TICKET_PLUGIN'.",
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            ticket_class = import_class_from_dotted_path(plugin)
+        except:
+            return Response(
+                data="Ticket plugin could not be imported. Please check that the path in 'TICKET_PLUGIN' is correct.",
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            url = ticket_class.create_ticket(incident)
+        except TicketPluginException as e:
+            return Response(
+                data=str(e),
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if url:
+            incident.ticket_url = url
+            incident.save(update_fields=["ticket_url"])
+            serializer = self.serializer_class(data={"ticket_url": incident.ticket_url})
+            if serializer.is_valid():
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(
+            data="No url could be generated. Please check that the ticket plugin provides a function to create tickets.",
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
 
 class IncidentTagViewSet(
