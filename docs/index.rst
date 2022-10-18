@@ -15,6 +15,7 @@ Welcome to Argus' documentation!
    site-specific-settings
    authentication
    notifications
+   ticket-systems
    development
    writing-plugins
    integrating-monitoring-systems
