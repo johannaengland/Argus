@@ -33,7 +33,7 @@ urlpatterns = [
     path("<int:incident_pk>/acks/<int:pk>/", ack_detail, name="incident-ack"),
     path("<int:incident_pk>/tags/", tag_list, name="incident-tags"),
     path("<int:incident_pk>/tags/<str:tag>/", tag_detail, name="incident-tag"),
-    path("<int:incident_pk>/new_ticket/", ticket_plugin_detail, name="incident-ticket-plugin"),
+    path("<int:incident_pk>/ticket/", ticket_plugin_detail, name="incident-ticket-plugin"),
     path("open/", views_V1.OpenIncidentListV1.as_view(), name="incidents-open"),
     path("open+unacked/", views_V1.OpenUnAckedIncidentListV1.as_view(), name="incidents-open-unacked"),
 ] + router.urls
