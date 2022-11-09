@@ -5,7 +5,10 @@ This file documents changes to Argus that are relevant for the users to know.
 
 ## ticket-plugin-base
 
-## Added
+**_NOTE:_**  To use the new ticket plugins new settings need to be added.
+This is documented in the docs under "Ticket system settings".
+
+### Added
 - Added an endpoint to create a new ticket in an external ticket system
 
 
