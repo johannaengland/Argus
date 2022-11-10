@@ -19,7 +19,7 @@ class CreateClientTests(TestCase):
         self.assertTrue(ticket_class.create_client(endpoint, authentication))
 
 
-class GeneralTicketSystemTests(TestCase):
+class GeneralTicketPluginTests(TestCase):
     @override_settings(
         TICKET_ENDPOINT="https://example.com/",
         TICKET_AUTHENTICATION_SECRET={"key": "value"},
