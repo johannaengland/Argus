@@ -18,6 +18,7 @@ event_detail = views.EventViewSet.as_view({"get": "retrieve"})
 
 ack_list = views.AcknowledgementViewSet.as_view({"get": "list", "post": "create"})
 ack_detail = views.AcknowledgementViewSet.as_view({"get": "retrieve", "put": "update", "patch": "partial_update"})
+acks_bulk_list = views.BulkAcknowledgementViewSet.as_view({"post": "create"})
 
 tag_list = views.IncidentTagViewSet.as_view({"get": "list", "post": "create"})
 tag_detail = views.IncidentTagViewSet.as_view({"get": "retrieve", "delete": "destroy"})
@@ -26,6 +27,7 @@ ticket_plugin_detail = views.TicketPluginViewSet.as_view({"put": "update"})
 
 app_name = "incident"
 urlpatterns = [
+    path("acks/bulk/", acks_bulk_list, name="incident-acks-bulk"),
     path("mine/", sourced_incident_list, name="source_locked_incidents"),
     path("<int:incident_pk>/events/", event_list, name="incident-events"),
     path("<int:incident_pk>/events/<int:pk>/", event_detail, name="incident-event"),

@@ -12,11 +12,33 @@ This is documented in the docs under "Ticket system settings".
 - Added an endpoint to create a new ticket in an external ticket system
 
 
-## Added
+## bulk/events
 
+### Added
+
+- Added an endpoint to create events for incidents in bulk
+
+
+## bulk/ticket-url
+
+### Added
+- Added an endpoint to set ticket_url of incidents in bulk
+
+
+## [1.9.0] - 2022-11-08
+
+### Added
+
+- Added an endpoint to acknowledge incidents in bulk
 - Added an endpoint to get a refreshed auth token.
 - Add a filter to find incidents with a duration longer than a given amount of
- minutes.
+  minutes.
+- Added tests for previously untested incident endpoints
+
+## [1.8.1] - 2022-10-28
+
+### Fixed
+- Fix typo that prevented SMS messages from being sent.
 
 ## [1.8.0] - 2022-10-06
 
