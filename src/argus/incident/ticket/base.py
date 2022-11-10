@@ -2,12 +2,20 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
+from django.core.mail import outbox
 from django.conf import settings
 
 __all__ = [
     "TicketPlugin",
     "TicketPluginException",
 ]
+
+created_tickets = []
+
+
+def empty_created_tickets():
+    global created_tickets
+    created_tickets = []
 
 
 class TicketPluginException(Exception):
