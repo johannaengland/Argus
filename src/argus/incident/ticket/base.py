@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from django.core.mail import outbox
 from django.conf import settings
 
 __all__ = [
