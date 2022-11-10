@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.test import TestCase, override_settings
 
-from argus.incident.ticket.base import TicketPluginException
 from argus.util.utils import import_class_from_dotted_path
 
 
