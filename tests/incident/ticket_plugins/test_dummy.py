@@ -26,3 +26,4 @@ class DummyTicketSystemTests(TestCase):
         url = dummy_class.create_ticket(incident)
 
         self.assertEqual(url, "www.example.com")
+        self.assertIn(ticket_data, list(map(lambda x: x[0], created_tickets)))

@@ -13,9 +13,10 @@ created_tickets = []
 
 
 class TicketTestClient:
+    @staticmethod
     def create(*args, **kwargs):
         global created_tickets
-        created_tickets.append((args, kwargs))
+        created_tickets.append((*args, kwargs))
 
         return "www.example.com"
 
