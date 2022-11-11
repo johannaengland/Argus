@@ -13,7 +13,7 @@ created_tickets = []
 
 
 class TicketTestClient:
-    def create_ticket(*args, **kwargs):
+    def create(*args, **kwargs):
         global created_tickets
         created_tickets.append((args, kwargs))
 

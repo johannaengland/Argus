@@ -37,7 +37,7 @@ class DummyPlugin(TicketPlugin):
         endpoint, authentication, ticket_information = cls.import_settings()
 
         client = cls.create_client(endpoint=endpoint, authentication=authentication)
-        ticket_url = client.create_ticket(
+        ticket_url = client.create(
             {
                 "title": str(incident),
                 "description": incident.description,
