@@ -19,6 +19,7 @@ class TicketTestClient:
 
         return "www.example.com"
 
+    @staticmethod
     def empty_created_tickets():
         global created_tickets
         created_tickets = []
