@@ -12,9 +12,16 @@ __all__ = [
 created_tickets = []
 
 
-def empty_created_tickets():
-    global created_tickets
-    created_tickets = []
+class TicketTestClient:
+    def create_ticket(*args, **kwargs):
+        global created_tickets
+        created_tickets.append((args, kwargs))
+
+        return "www.example.com"
+
+    def empty_created_tickets():
+        global created_tickets
+        created_tickets = []
 
 
 class TicketPluginException(Exception):
@@ -48,7 +55,7 @@ class TicketPlugin(ABC):
 
     @staticmethod
     @abstractmethod
-    def create_client(endpoint):
+    def create_client(endpoint, authentication):
         """
         Creates, authenticates and returns a client to connect with the given
         endpoint
