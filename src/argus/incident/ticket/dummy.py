@@ -23,11 +23,11 @@ class DummyPlugin(TicketPlugin):
 
     @classmethod
     def import_settings(cls):
-        return None, None, None
+        return "www.example.com", None, None
 
     @staticmethod
     def create_client(endpoint, authentication):
-        return TicketTestClient()
+        return TicketTestClient(endpoint, authentication)
 
     @classmethod
     def create_ticket(cls, incident: Incident):

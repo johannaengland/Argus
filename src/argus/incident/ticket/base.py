@@ -12,18 +12,21 @@ __all__ = [
 created_tickets = []
 
 
+def empty_created_tickets():
+    global created_tickets
+    created_tickets = []
+
+
 class TicketTestClient:
-    @staticmethod
-    def create(*args, **kwargs):
+    def __init__(self, endpoint, authentication):
+        self.authentication = authentication
+        self.endpoint = endpoint
+
+    def create(self, *args, **kwargs):
         global created_tickets
         created_tickets.append((*args, kwargs))
 
-        return "www.example.com"
-
-    @staticmethod
-    def empty_created_tickets():
-        global created_tickets
-        created_tickets = []
+        return self.endpoint
 
 
 class TicketPluginException(Exception):
