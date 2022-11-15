@@ -9,25 +9,6 @@ __all__ = [
     "TicketPluginException",
 ]
 
-created_tickets = []
-
-
-def empty_created_tickets():
-    global created_tickets
-    created_tickets = []
-
-
-class TicketTestClient:
-    def __init__(self, endpoint, authentication):
-        self.authentication = authentication
-        self.endpoint = endpoint
-
-    def create(self, *args, **kwargs):
-        global created_tickets
-        created_tickets.append((*args, kwargs))
-
-        return self.endpoint
-
 
 class TicketPluginException(Exception):
     """Ticket plugin exception"""

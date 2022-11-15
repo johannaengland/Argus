@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
-from .base import created_tickets, TicketPlugin, TicketTestClient
+from .base import TicketPlugin
 
 if TYPE_CHECKING:
     from argus.incident.models import Incident
@@ -13,6 +13,25 @@ LOG = logging.getLogger(__name__)
 __all__ = [
     "DummyPlugin",
 ]
+
+created_tickets = []
+
+
+def empty_created_tickets():
+    global created_tickets
+    created_tickets = []
+
+
+class TicketTestClient:
+    def __init__(self, endpoint, authentication):
+        self.authentication = authentication
+        self.endpoint = endpoint
+
+    def create(self, *args, **kwargs):
+        global created_tickets
+        created_tickets.append((*args, kwargs))
+
+        return self.endpoint
 
 
 class DummyPlugin(TicketPlugin):

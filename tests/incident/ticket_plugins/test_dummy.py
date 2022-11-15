@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from argus.incident.factories import StatefulIncidentFactory
-from argus.incident.ticket.base import created_tickets
+from argus.incident.ticket.dummy import created_tickets
 from argus.util.utils import import_class_from_dotted_path
 from argus.util.testing import disconnect_signals, connect_signals
 
