@@ -7,8 +7,9 @@ The settings which are relevant for the integration with the different ticket
 systems are ``TICKET_PLUGIN``, ``TICKET_ENDPOINT``,
 ``TICKET_AUTHENTICATION_SECRET`` and ``TICKET_INFORMATION``.
 
-``TICKET_PLUGIN`` is the path to the ticket plugin. The included plugins are
-located in ``argus.incident.ticket``, so the path should look something like this:
+``TICKET_PLUGIN`` is the fully qualified name of the ticket plugin Python
+class. The included plugins are located in the ``argus.incident.ticket``
+namespace, so the path should look something like this:
 ``argus.incident.ticket.FileName.PluginName``.
 
 ``TICKET_ENDPOINT`` is the link to the ticket system website the ticket should be

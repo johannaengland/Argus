@@ -12,6 +12,7 @@ the following methods:
 .. autoclass:: argus.incident.ticket.base.TicketPlugin
    :members:
 
-The function ``create_ticket`` calls the two previous functions and creates
-the desired ticket and returns its url. This function is called within Argus
-when a user wants to create a ticket.
+The method ``create_ticket`` calls ``import_settings`` and ``create_client``
+and using the library creates a ticket within the desired ticket system and
+returns its url. This method is called within Argus when a user wants to create
+a ticket.
