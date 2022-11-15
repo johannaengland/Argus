@@ -5,11 +5,10 @@ This file documents changes to Argus that are relevant for the users to know.
 
 ## ticket-plugin-base
 
-**_NOTE:_**  To use the new ticket plugins new settings need to be added.
-This is documented in the docs under "Ticket system settings".
-
 ### Added
-- Added an endpoint to create a new ticket in an external ticket system
+- Plugin system for ticket system integrations, documented in the new "Ticket
+  system settings" sections.
+- New API endpoint to create a new ticket in an external ticket system
 
 
 ## bulk/events
