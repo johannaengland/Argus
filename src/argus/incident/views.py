@@ -1,3 +1,4 @@
+import logging
 import secrets
 
 from django.conf import settings
@@ -49,6 +50,8 @@ from .serializers import (
     TagSerializer,
     IncidentTagRelation,
 )
+
+LOG = logging.getLogger(__name__)
 
 
 # Used in OpenApiParameter
@@ -284,9 +287,10 @@ class TicketPluginViewSet(viewsets.ViewSet):
 
         try:
             ticket_class = import_class_from_dotted_path(plugin)
-        except:
+        except Exception:
+            LOG.exception("Could not import ticket plugin from path %s", plugin)
             return Response(
-                data="Ticket plugin could not be imported. Please check that the path in 'TICKET_PLUGIN' is correct.",
+                data="Ticket plugins are incorrectly configured.",
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
