@@ -517,8 +517,19 @@ Incident endpoints
       the time the server received the event if omitted.
 
 
--  ``GET`` to ``/api/v1/incidents/<int:pk>/acks/<int:pk>/``: returns a
-   specific acknowledgement of the specified incident
+-  ``/api/v1/incidents/<int:pk>/acks/<int:pk>/``:
+
+   -  ``GET``: returns a specific acknowledgement of the specified incident
+
+   -  ``PUT``: updates the expiration of and returns a specific acknowledgement
+      of the specific incident
+
+      .. code-block:: json
+        :caption: Example request body
+
+          {
+              "expiration": "2011-11-13 12:00:00"
+          }
 
 -  ``/api/v1/incidents/sources/``:
 
@@ -686,7 +697,20 @@ Notification profile endpoints
 
           {
               "name": "Critical incidents",
-              "filter_string": "{\"sourceSystemIds\": [<SourceSystem.pk>, ...], \"tags\": [\"key1=value1\", ...]}"
+              "filter_string": "{\"sourceSystemIds\": [<SourceSystem.pk>, ...], \"tags\": [\"key1=value1\", ...]}",
+              "filter": {
+                  "sourceSystemIds": [
+                      1
+                  ],
+                  "tags": [
+                      "key1=value1"
+                  ],
+                  "open": true,
+                  "acked": false,
+                  "stateful": true,
+                  "maxlevel": 1,
+                  "event_type": "STA"
+              }
           }
 
 
@@ -1161,10 +1185,8 @@ Incident endpoints
         :caption: Example request body
 
           {
-              "event": {
-                  "timestamp": "2011-11-11 11:11:11.235877",
-                  "description": "The incident is being investigated."
-              },
+              "timestamp": "2011-11-11 11:11:11.235877",
+              "description": "The incident is being investigated."
               "expiration": "2011-11-13 12:00:00"
           }
 
@@ -1174,8 +1196,19 @@ Incident endpoints
       the time the server received the event if omitted.
 
 
--  ``GET`` to ``/api/v2/incidents/<int:pk>/acks/<int:pk>/``: returns a
-   specific acknowledgement of the specified incident
+-  ``/api/v2/incidents/<int:pk>/acks/<int:pk>/``:
+
+   -  ``GET``: returns a specific acknowledgement of the specified incident
+
+   -  ``PUT``: updates the expiration of and returns a specific acknowledgement
+      of the specific incident
+
+      .. code-block:: json
+        :caption: Example request body
+
+          {
+              "expiration": "2011-11-13 12:00:00"
+          }
 
 -  ``/api/v2/incidents/sources/``:
 
@@ -1214,6 +1247,26 @@ Incident endpoints
           {
               "ids": [1, 2],
               "ticket_url": "https://tickettracker.com/tickets/987654/",
+          }
+
+
+-  ``/api/v2/incidents/acks/bulk/``:
+
+   -  ``POST``: bulk creates acknowledgements for multiple incidents and
+      returns a dictionary indicating if the action was successful for each
+      incident, the created acknowledgement and potential errors
+
+      .. code-block:: json
+        :caption: Example request body
+          {
+              "ids": [1, 2],
+              "ack": {
+                  "event": {
+                      "timestamp": "2011-11-11 11:11:11.235877",
+                      "description": "The incident is being investigated."
+                  },
+                  "expiration": "2011-11-13 12:00:00"
+              }
           }
 
 

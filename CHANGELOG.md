@@ -12,18 +12,23 @@ read by developers.
 - New API endpoint to create a new ticket in an external ticket system
 
 
-## bulk/events
-
 ### Added
 
+- Add docs about notification plugins
+- Added the possibility to filter notifications by event-type
+- Added a management command that will create incidents if a source token is
+  close to expiring
+- Added an endpoint to set `ticket_url` of incidents in bulk
 - Added an endpoint to create events for incidents in bulk
 
+### Fixed
+- Changed when the Media-table is synced with settings `MEDIA_PLUGINS` to avoid
+  dev/prod-settings leaking into the tests
 
-## bulk/ticket-url
+### Changed
 
-### Added
-- Added an endpoint to set ticket_url of incidents in bulk
-
+- Flatten the json structure for posting acknowledgements.
+- Improve Sonar Cloud settings, like just testing for Python 3
 
 ## [1.9.0] - 2022-11-08
 

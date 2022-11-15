@@ -11,18 +11,17 @@ This file documents changes to Argus that are relevant for the users to know.
 - New API endpoint to create a new ticket in an external ticket system
 
 
-## bulk/events
-
 ### Added
-
+- Add docs about notification plugins
+- Added a management command that will create incidents if a source token is
+  close to expiring
 - Added an endpoint to create events for incidents in bulk
-
-
-## bulk/ticket-url
-
-### Added
 - Added an endpoint to set ticket_url of incidents in bulk
+- Added the possibility to filter notifications by event-type
 
+### Changed
+
+- Flatten the json structure for posting acknowledgements.
 
 ## [1.9.0] - 2022-11-08
 
