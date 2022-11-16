@@ -46,7 +46,7 @@ class TicketTestClient:
     def __init__(self, endpoint, authentication):
         """Initialize the client that will chat to the ticket system
 
-        All ticket systems we have seen so far seems to use this pattern to
+        All ticket systems we have seen so far seem to use this pattern to
         initialize the client.
         """
 
