@@ -24,5 +24,5 @@ password-based authentication.
 create a ticket, for example the specific repository or queue the ticket should
 be created in.
 
-To enable an integration with a ticket plugin these settings need to be added
+To enable an integration with a ticket plugin these settings MUST be added
 to Argus.
