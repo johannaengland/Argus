@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+from django.core.validators import URLValidator
 from django.test import TestCase
 
 from argus.incident.factories import StatefulIncidentFactory
@@ -25,5 +27,11 @@ class DummyTicketSystemTests(TestCase):
 
         url = dummy_class.create_ticket(incident)
 
-        self.assertTrue(bool(url.strip()), 'Return url can never be empty')
+        url_validator = URLValidator()
+
+        try:
+            url_validator(url)
+        except ValidationError as e:
+            self.fail(f"Invalid url: {url}, details: {e}")
+
         self.assertIn(ticket_data, list(map(lambda x: x[0], created_tickets)))
