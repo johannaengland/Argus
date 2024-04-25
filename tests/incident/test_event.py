@@ -124,17 +124,8 @@ class EventAPITests(APITestCase, IncidentBasedAPITestCaseHelper):
         assert_incident_stateless()
 
     def test_posting_allowed_event_types_for_source_system_is_valid(self):
-        def delete_start_event(incident: Incident):
-            incident.start_event.delete()
-
-        source_system_allowed_types_and_preconditions = {
-            Event.Type.INCIDENT_START: delete_start_event,
-            Event.Type.INCIDENT_END: lambda incident: None,
-            Event.Type.OTHER: lambda incident: None,
-        }
-        for event_type, ensure_precondition in source_system_allowed_types_and_preconditions.items():
+        for event_type in Event.ALLOWED_TYPES_FOR_SOURCE_SYSTEMS:
             with self.subTest(event_type=event_type):
-                ensure_precondition(self.stateful_incident1)
                 self._assert_posting_event_succeeds(self._create_event_dict(event_type), self.source1_rest_client)
 
     def test_posting_allowed_event_types_for_end_user_is_valid(self):
