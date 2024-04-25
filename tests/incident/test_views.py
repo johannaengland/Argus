@@ -33,26 +33,39 @@ from argus.notificationprofile.models import Filter
 from argus.util.testing import disconnect_signals, connect_signals
 
 
-class EventViewSetTestCase(TestCase):
+class EventViewSetTestCase(APITestCase):
     def setUp(self):
         disconnect_signals()
         source_type = SourceSystemTypeFactory()
         source_user = SourceUserFactory()
         self.source = SourceSystemFactory(type=source_type, user=source_user)
+        self.incident = StatefulIncidentFactory(source=self.source)
+        self.client.force_authenticate(user=source_user)
 
     def tearDown(self):
         connect_signals()
 
     def test_validate_event_type_for_incident_acknowledge_raises_validation_error(self):
-        incident = StatefulIncidentFactory(source=self.source)
         viewfactory = RequestFactory()
-        request = viewfactory.get(f"/api/v1/incidents/{incident.pk}/events/")
+        request = viewfactory.get(f"/api/v1/incidents/{self.incident.pk}/events/")
         request.versioning_scheme = versioning.NamespaceVersioning()
         request.version = "v1"
         view = EventViewSet()
         view.request = request
         with self.assertRaises(serializers.ValidationError):
-            view.validate_event_type_for_incident(Event.Type.ACKNOWLEDGE, incident)
+            view.validate_event_type_for_incident(Event.Type.ACKNOWLEDGE, self.incident)
+
+    def test_posting_start_event_should_fail(self):
+        data = {
+            "timestamp": "2024-04-25T12:46:52.420Z",
+            "type": "STA",
+        }
+
+        response = self.client.post(path=f"/api/v1/incidents/{self.incident.pk}/events/", data=data, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        # Check that no start event exists
+        self.assertFalse(self.incident.events.filter(type=Event.Type.INCIDENT_START).exists())
 
 
 class IncidentAPITestCase(APITestCase):

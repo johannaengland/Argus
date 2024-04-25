@@ -208,7 +208,6 @@ class Event(models.Model):
         STATELESS = "LES", "Stateless"
 
     ALLOWED_TYPES_FOR_SOURCE_SYSTEMS = {
-        Type.INCIDENT_START,
         Type.INCIDENT_END,
         Type.OTHER,
         Type.INCIDENT_CHANGE,
