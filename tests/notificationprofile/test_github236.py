@@ -1,6 +1,5 @@
 from django.core import mail
 from django.test import TestCase, tag
-import json
 
 from argus.auth.factories import PersonUserFactory
 from argus.incident.models import create_fake_incident, get_or_create_default_instances, Event

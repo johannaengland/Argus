@@ -8,7 +8,7 @@ from django.utils.dateparse import parse_datetime, parse_time
 from django.utils.timezone import make_aware
 
 from argus.incident.factories import SourceSystemFactory, TagFactory
-from argus.incident.models import Event, Incident
+from argus.incident.models import Incident
 from argus.notificationprofile.models import (
     FilterWrapper,
     TimeRecurrence,

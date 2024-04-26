@@ -1,5 +1,4 @@
 from django.test import TestCase
-import json
 
 from argus.auth.factories import PersonUserFactory
 from argus.incident.factories import EventFactory
