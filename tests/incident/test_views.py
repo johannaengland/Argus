@@ -822,6 +822,8 @@ class IncidentViewSetTestCase(APITestCase):
 
 
 class BulkAcknowledgementViewSetTestCase(APITestCase):
+    ENDPOINT = "/api/v2/incidents/acks/bulk/"
+
     def setUp(self):
         disconnect_signals()
         self.user = BaseUserFactory(username="user1")
@@ -843,7 +845,7 @@ class BulkAcknowledgementViewSetTestCase(APITestCase):
             "ack": self.ack_data,
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/acks/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -870,7 +872,7 @@ class BulkAcknowledgementViewSetTestCase(APITestCase):
             },
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/acks/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -902,7 +904,7 @@ class BulkAcknowledgementViewSetTestCase(APITestCase):
             },
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/acks/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -930,7 +932,7 @@ class BulkAcknowledgementViewSetTestCase(APITestCase):
             "ack": self.ack_data,
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/acks/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -956,7 +958,7 @@ class BulkAcknowledgementViewSetTestCase(APITestCase):
             "ack": self.ack_data,
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/acks/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -975,6 +977,8 @@ class BulkAcknowledgementViewSetTestCase(APITestCase):
 
 
 class BulkEventViewSetTestCase(APITestCase):
+    ENDPOINT = "/api/v2/incidents/events/bulk/"
+
     def setUp(self):
         disconnect_signals()
         self.user = BaseUserFactory(username="user1")
@@ -996,7 +1000,7 @@ class BulkEventViewSetTestCase(APITestCase):
             "event": self.event_data,
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/events/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -1024,7 +1028,7 @@ class BulkEventViewSetTestCase(APITestCase):
             },
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/events/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -1055,7 +1059,7 @@ class BulkEventViewSetTestCase(APITestCase):
             },
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/events/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -1086,7 +1090,7 @@ class BulkEventViewSetTestCase(APITestCase):
             },
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/events/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         incident_1.refresh_from_db()
         incident_2.refresh_from_db()
@@ -1121,7 +1125,7 @@ class BulkEventViewSetTestCase(APITestCase):
             },
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/events/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         incident_1.refresh_from_db()
         incident_2.refresh_from_db()
@@ -1155,7 +1159,7 @@ class BulkEventViewSetTestCase(APITestCase):
             "event": self.event_data,
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/events/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -1181,7 +1185,7 @@ class BulkEventViewSetTestCase(APITestCase):
             "event": self.event_data,
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/events/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -1200,6 +1204,8 @@ class BulkEventViewSetTestCase(APITestCase):
 
 
 class BulkTicketUrlViewSetTestCase(APITestCase):
+    ENDPOINT = "/api/v2/incidents/ticket_url/bulk/"
+
     def setUp(self):
         disconnect_signals()
         self.user = BaseUserFactory(username="user1")
@@ -1217,7 +1223,7 @@ class BulkTicketUrlViewSetTestCase(APITestCase):
             "ticket_url": self.ticket_url,
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/ticket_url/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -1245,7 +1251,7 @@ class BulkTicketUrlViewSetTestCase(APITestCase):
             "ticket_url": self.ticket_url,
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/ticket_url/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -1268,7 +1274,7 @@ class BulkTicketUrlViewSetTestCase(APITestCase):
             "ticket_url": self.ticket_url,
         }
 
-        response = self.client.post(path=f"/api/v2/incidents/ticket_url/bulk/", data=data, format="json")
+        response = self.client.post(path=self.ENDPOINT, data=data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
