@@ -300,7 +300,7 @@ class IncidentViewSetV1TestCase(IncidentAPITestCase):
     def test_can_get_all_source_types(self):
         source_type_names = set([type.name for type in SourceSystemType.objects.all()])
 
-        response = self.client.get(path=f"/api/v1/incidents/source-types/")
+        response = self.client.get(path="/api/v1/incidents/source-types/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_types = set([type["name"] for type in response.data])
@@ -315,14 +315,14 @@ class IncidentViewSetV1TestCase(IncidentAPITestCase):
         data = {
             "name": "test",
         }
-        response = self.client.post(path=f"/api/v1/incidents/source-types/", data=data, format="json")
+        response = self.client.post(path="/api/v1/incidents/source-types/", data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(SourceSystemType.objects.filter(name=data["name"]).exists())
 
     def test_can_get_all_source_systems(self):
         source_pks = set([source.pk for source in SourceSystem.objects.all()])
 
-        response = self.client.get(path=f"/api/v1/incidents/sources/")
+        response = self.client.get(path="/api/v1/incidents/sources/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_source_pks = set([source["pk"] for source in response.data])
@@ -340,7 +340,7 @@ class IncidentViewSetV1TestCase(IncidentAPITestCase):
             "name": "newtest",
             "type": self.source.type.name,
         }
-        response = self.client.post(path=f"/api/v1/incidents/sources/", data=data, format="json")
+        response = self.client.post(path="/api/v1/incidents/sources/", data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(SourceSystem.objects.filter(name=data["name"]).exists())
 
@@ -756,7 +756,7 @@ class IncidentViewSetTestCase(APITestCase):
         self.add_open_incident_with_start_event_and_tag()
         event_pks = list(Event.objects.all().values_list("pk", flat=True))
 
-        response = self.client.get(path=f"/api/v2/incidents/events/")
+        response = self.client.get(path="/api/v2/incidents/events/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # Paging, so check "results"
@@ -766,7 +766,7 @@ class IncidentViewSetTestCase(APITestCase):
     def test_can_get_all_source_types(self):
         source_type_names = set([type.name for type in SourceSystemType.objects.all()])
 
-        response = self.client.get(path=f"/api/v2/incidents/source-types/")
+        response = self.client.get(path="/api/v2/incidents/source-types/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_types = set([type["name"] for type in response.data])
@@ -781,14 +781,14 @@ class IncidentViewSetTestCase(APITestCase):
         data = {
             "name": "test",
         }
-        response = self.client.post(path=f"/api/v2/incidents/source-types/", data=data, format="json")
+        response = self.client.post(path="/api/v2/incidents/source-types/", data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(SourceSystemType.objects.filter(name=data["name"]).exists())
 
     def test_can_get_all_source_systems(self):
         source_pks = set([source.pk for source in SourceSystem.objects.all()])
 
-        response = self.client.get(path=f"/api/v2/incidents/sources/")
+        response = self.client.get(path="/api/v2/incidents/sources/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_source_pks = set([source["pk"] for source in response.data])
@@ -806,7 +806,7 @@ class IncidentViewSetTestCase(APITestCase):
             "name": "newtest",
             "type": self.source.type.name,
         }
-        response = self.client.post(path=f"/api/v2/incidents/sources/", data=data, format="json")
+        response = self.client.post(path="/api/v2/incidents/sources/", data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(SourceSystem.objects.filter(name=data["name"]).exists())
 
