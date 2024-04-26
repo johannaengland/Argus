@@ -12,7 +12,6 @@ __all__ = [
 class BaseUserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
-        django_get_or_create = ("username",)
 
     is_staff = False
     is_superuser = False
@@ -22,7 +21,6 @@ class BaseUserFactory(factory.django.DjangoModelFactory):
 class PersonUserFactory(BaseUserFactory):
     class Meta:
         model = User
-        django_get_or_create = ("username",)
 
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
@@ -35,7 +33,6 @@ class PersonUserFactory(BaseUserFactory):
 class SourceUserFactory(BaseUserFactory):
     class Meta:
         model = User
-        django_get_or_create = ("username",)
 
     username = factory.Faker("word")
     is_staff = False

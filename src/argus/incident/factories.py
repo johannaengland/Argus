@@ -20,7 +20,6 @@ __all__ = [
 class SourceSystemTypeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.SourceSystemType
-        django_get_or_create = ("name",)
 
     name = factory.Sequence(lambda s: "SourceSystemType %s" % s)
 
@@ -28,7 +27,6 @@ class SourceSystemTypeFactory(factory.django.DjangoModelFactory):
 class SourceSystemFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.SourceSystem
-        django_get_or_create = ("name", "user")
 
     name = factory.Sequence(lambda s: "SourceSystem %s" % s)
     type = factory.SubFactory(SourceSystemTypeFactory)
