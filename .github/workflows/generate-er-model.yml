@@ -21,6 +21,7 @@ jobs:
         run: |
           pip install -U pip
           pip install tox
+          sudo apt-get install -y --no-install-recommends graphviz
 
       - name: Create and switch to new branch
         # run_number here is used to get unique branch names
