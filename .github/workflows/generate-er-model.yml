@@ -1,0 +1,47 @@
+name: Regenerate ER model
+
+on: workflow_dispatch
+
+jobs:
+  regenerate-er-model:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install -U pip
+          pip install tox
+
+      - name: Create and switch to new branch
+        # run_number here is used to get unique branch names
+        run: |
+          git switch -c update-er-model-${{ github.run_number }}
+
+      - name: Generate ER-model
+        run: tox -e generate-er-model
+
+      - name: Add, commit and push changes
+        run: |
+          git config user.email "kontakt@sikt.no"
+          git config user.name "ER-model generator"
+          git add "docs/reference/img/ER_model.png"
+          git commit -m "Update ER model"
+          git push -u origin update-er-model-${{ github.run_number }}
+
+      - name: Create pull request
+        run: |
+          gh pr create -B master -H update-er-model-${{ github.run_number }} \
+          --title 'Update ER model' \
+          --body 'Created by GitHub action, triggered manually by @${{ github.actor }}'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
