@@ -51,6 +51,12 @@ class Command(BaseCommand):
             help="Use this source for the incident (the source needs to exist, see 'create_source' for creating one)",
         )
         parser.add_argument("--stateless", action="store_true", help="Create a stateless incident (end_time = None)")
+        parser.add_argument(
+            "--file",
+            type=lambda p: Path(p).absolute(),
+            help="Path to json-file containing all data for the fake incident",
+        )
+
         metadata_parser = parser.add_mutually_exclusive_group()
         metadata_parser.add_argument(
             "--metadata",
@@ -64,6 +70,12 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        content = {}
+        if file_path := options.get("file", ""):
+            if file_path:
+                with file_path.open() as jsonfile:
+                    content = json.load(jsonfile)
+
         tags = options.get("tags") or []
         description = options.get("description") or None
         source = options.get("source") or None
