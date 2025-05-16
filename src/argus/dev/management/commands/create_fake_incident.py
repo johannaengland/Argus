@@ -12,6 +12,17 @@ from argus.incident.models import SourceSystem, create_fake_incident
 
 User = get_user_model()
 
+COMMAND_ARGUMENTS = [
+    "tags",
+    "description",
+    "source",
+    "batch_size",
+    "level",
+    "stateful",
+    "metadata",
+    "metadata_path",
+]
+
 
 class Range(argparse.Action):
     def __init__(self, minimum=None, maximum=None, *args, **kwargs):
@@ -75,6 +86,9 @@ class Command(BaseCommand):
             if file_path:
                 with file_path.open() as jsonfile:
                     content = json.load(jsonfile)
+
+        if file_path and any(options.get(name, None) for name in COMMAND_ARGUMENTS):
+            raise CommandError("If argument 'file' is given no other arguments are allowed")
 
         content["tags"] = options.get("tags") or []
         content["description"] = options.get("description") or None
